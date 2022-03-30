@@ -1,0 +1,4 @@
+django==3.2.12
+django_rest_framework==0.1.0
+gunicorn==20.0.4
+whitenoise
