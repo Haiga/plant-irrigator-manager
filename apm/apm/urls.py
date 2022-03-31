@@ -15,8 +15,18 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from rest_framework import routers
+from web.api.viewsets import IrrigatorViewSet, SpecieViewSet, PlantViewSet
+from web.views import IrrigatorManageApi, IrrigatorsDetailListApi
+
+route = routers.DefaultRouter()
+route.register('irrigator', IrrigatorViewSet, basename='Irrigator')
+route.register('specie', SpecieViewSet, basename='Specie')
+route.register('plant', PlantViewSet, basename='Plant')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('web.urls'))
+    path('', include(route.urls)),
+    path('reports/irrigator/<int:id>/<type>/', IrrigatorManageApi.as_view(), name='ReportsIrrigator'),
+    path('reports/irrigators/', IrrigatorsDetailListApi.as_view(), name='ReportsPlants')
 ]
